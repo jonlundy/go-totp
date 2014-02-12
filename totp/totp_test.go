@@ -5,23 +5,25 @@ import (
 	"crypto/sha256"
 	"crypto/sha512"
 	"encoding/base32"
-	"fmt"
 	"hash"
 	"testing"
 	"time"
 )
 
-func TestTotp(t *testing.T) {
-	var err error
-	var totp string
+var key string = "KR5IFRJE7N7NFHH3"
 
-	key, err := base32.StdEncoding.DecodeString("KR5IFRJE7N7NFHH3")
+func TestTotpAuth(t *testing.T) {
+	k, _ := base32.StdEncoding.DecodeString(key)
 
-	totp, _ = Totp(key, time.Now().Unix(), sha1.New, 6)
-	fmt.Println("Google AUTH: KR5IFRJE7N7NFHH3 TOTP:", totp)
+	totp, _ := Totp(k, time.Now().Unix(), sha1.New, 6)
+	t.Logf("AUTH Key: %s TOTP:%s", key, totp)
+}
+
+func TestTotpLength(t *testing.T) {
+	k, _ := base32.StdEncoding.DecodeString(key)
 
 	for i := int64(1); i < 10; i++ {
-		totp, err = Totp(key, time.Now().Unix(), sha1.New, i)
+		totp, err := Totp(k, time.Now().Unix(), sha1.New, i)
 		if err != nil {
 			t.Error(err)
 		}
@@ -29,18 +31,18 @@ func TestTotp(t *testing.T) {
 			t.Error("Length not equal: ", i)
 		}
 	}
+}
 
+func TestTotpVectors(t *testing.T) {
 	for _, v := range testvectors {
-		totp, err = Totp(genkey(v.l), v.t, v.h, 8)
+		totp, err := Totp(genkey(v.l), v.t, v.h, 8)
 		if err != nil {
 			t.Error(err)
 		}
 		if totp != v.s {
 			t.Error("Wrong Code Generation: Expect:", v.s, " Got: ", totp)
 		}
-
 	}
-
 }
 
 func genkey(l int64) []byte {
