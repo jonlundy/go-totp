@@ -25,9 +25,13 @@ func Totp(k []byte, t int64, h func() hash.Hash, l int64) (string, error) {
 		return "", err
 	}
 
+	// fmt.Printf("TIME Hex: %x\n", time.Bytes())
+
 	hash := hmac.New(h, k)
 	hash.Write(time.Bytes())
 	v := hash.Sum(nil)
+
+	// fmt.Printf("HMAC: %x\n", v)
 
 	o := v[len(v)-1] & 0xf
 	c := (int32(v[o]&0x7f)<<24 | int32(v[o+1])<<16 | int32(v[o+2])<<8 | int32(v[o+3])) % 1000000000
