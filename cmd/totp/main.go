@@ -21,7 +21,7 @@ func main() {
            key += strings.Repeat("=", 8-i)
         }
 
-        k, err := base32.StdEncoding.DecodeString(key)
+        k, _ := base32.StdEncoding.DecodeString(key)
 
 	code, _ := totp.Totp(k, time.Now().Unix(), sha1.New, 6)
 	fmt.Print(code)
