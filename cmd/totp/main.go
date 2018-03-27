@@ -15,7 +15,7 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 	key, _ := reader.ReadString('\n')
 
-	key = strings.Trim(key, "=\n")
+	key = strings.ToUpper(strings.Trim(key, "=\n"))
 
         if i := len(key) % 8; i != 0 {
            key += strings.Repeat("=", 8-i)
