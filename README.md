@@ -1,5 +1,6 @@
 TOTP: Time-Based One-Time Password Algorithm in Golang
 =======
+[![Build Status](https://travis-ci.org/JonLundy/go-totp.svg?branch=master)](https://travis-ci.org/JonLundy/go-totp)
 
 This function implements RFC 6238 as used in time based one time password generation. 
 
