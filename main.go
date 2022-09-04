@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/JonLundy/go-totp/pkg/totp"
+	"github.com/jonlundy/go-totp/pkg/totp"
 	"bufio"
 	"os"
 	"encoding/base32"
