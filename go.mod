@@ -1,3 +1,3 @@
-module github.com/jonlundy/go-totp
+module go.sour.is/totp
 
 go 1.17
